@@ -4,7 +4,8 @@
   "description": "Meetup clone",
   "main": "index.js",
   "scripts": {
-    "test:integration": "jest ./tests/*"
+    "test:integration": "TEST_MODE=handler jest ./tests/*",
+    "test:acceptance": "TEST_MODE=http jest ./tests/*"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,8 @@
   "homepage": "https://github.com/vgaltes/TheServerlessCourseSourceCode#readme",
   "devDependencies": {
     "jest": "^24.7.1",
-    "serverless": "^1.41.1"
+    "serverless": "^1.41.1",
+    "superagent": "^5.0.3",
+    "superagent-promise": "^1.1.0"
   }
 }
