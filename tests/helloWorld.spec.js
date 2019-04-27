@@ -1,13 +1,12 @@
-const handler = require(`../src/functions/helloWorld`);
+const when = require("./steps/when");
 
 describe(`When we invoke the GET /helloWorld endpoint`, () => {
-    test(`Should return the right greeting`, async () => {
-      const name = "Manolito";
-      const event = { pathParameters: { name: name } };
-      const response = await handler.handler(event);
-      response.body = JSON.parse(response.body);
-  
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toBe("Hello Manolito")
-    });
+
+  test(`Should return the right greeting`, async () => {
+    const name = "Manolito";
+    const res = await when.we_invoke_helloWorld(name);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBe("Hello Manolito")
   });
+});
