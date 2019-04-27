@@ -1,7 +1,7 @@
 module.exports.handler = async event => {
     console.log(JSON.stringify(event));
 
-    const { name } = JSON.parse(event.body);
+    const { name } = event.pathParameters;
 
     const res = {
         statusCode: 200,
