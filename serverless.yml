@@ -1,5 +1,9 @@
 service: gettogether
 
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-iam-roles-per-function
+
 provider:
   name: aws
   runtime: nodejs8.10
@@ -7,12 +11,16 @@ provider:
   stage: dev
 
 functions:
-  helloWorld:
-    handler: src/functions/helloWorld.handler
+  getGetTogethers:
+    handler: src/functions/getGetTogethers.handler
     events:
       - http:
-          path: api/helloWorld/{name}
+          path: api/getTogethers
           method: get
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:scan
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/gettogethers
 
 resources:
   Resources:
