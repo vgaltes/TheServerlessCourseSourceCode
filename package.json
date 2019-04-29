@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:integration": "TEST_MODE=handler jest ./tests/*",
-    "test:acceptance": "TEST_MODE=http jest ./tests/*"
+    "test:acceptance": "TEST_MODE=http jest ./tests/*",
+    "deploy": "serverless deploy --aws-profile serverless-local --aws-s3-accelerate"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
     "serverless": "^1.41.1",
     "superagent": "^5.0.3",
     "superagent-promise": "^1.1.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.445.0"
   }
 }

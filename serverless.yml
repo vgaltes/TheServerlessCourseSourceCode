@@ -13,3 +13,17 @@ functions:
       - http:
           path: api/helloWorld/{name}
           method: get
+
+resources:
+  Resources:
+    GetTogethersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: gettogethers
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
