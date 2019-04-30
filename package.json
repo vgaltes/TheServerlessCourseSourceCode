@@ -7,7 +7,8 @@
     "test:integration": "TEST_MODE=handler jest ./tests/*",
     "test:acceptance": "TEST_MODE=http jest ./tests/*",
     "deploy": "serverless deploy --aws-profile serverless-local --aws-s3-accelerate",
-    "seed": "AWS_PROFILE=serverless-local node seedGetTogethers.js gettogethers"
+    "seed": "AWS_PROFILE=serverless-local node seedGetTogethers.js gettogethers",
+    "deploy:sit": "serverless deploy --aws-profile serverless-agent --stage sit"
   },
   "repository": {
     "type": "git",
