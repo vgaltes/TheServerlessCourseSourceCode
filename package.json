@@ -8,7 +8,8 @@
     "test:acceptance": "TEST_MODE=http jest ./tests/*",
     "deploy": "serverless deploy --aws-profile serverless-local --aws-s3-accelerate",
     "seed": "AWS_PROFILE=serverless-local node seedGetTogethers.js gettogethers",
-    "deploy:sit": "serverless deploy --stage sit"
+    "deploy:sit": "serverless deploy --stage sit",
+    "seed:sit": "node seedGetTogethers.js sit-gettogethers"
   },
   "repository": {
     "type": "git",

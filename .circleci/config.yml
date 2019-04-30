@@ -2,13 +2,13 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.13
 jobs:
-  aws-cli:
-    executor: aws-cli/default
-    steps:
-      - checkout
-      - aws-cli/install
-      - aws-cli/configure
-          # profile-name: serverless-agent
+  # aws-cli:
+  #   executor: aws-cli/default
+  #   steps:
+  #     - checkout
+  #     - aws-cli/install
+  #     - aws-cli/configure
+  #         # profile-name: serverless-agent
   build:
     docker:
       - image: circleci/node:8.10
@@ -35,7 +35,7 @@ jobs:
           command: npm run deploy:sit
       - run:
           name: Recreate database
-          command: node seedMasters.js masters-sit
+          command: npm run seed:sit
       - run:
           name: Run integration tests
           command: TEST_STAGE=sit npm run test:integration
@@ -46,11 +46,11 @@ jobs:
           name: Deploy application
           command: npm run deploy:prod
 
-workflows:
-  version: 2
-  deploy:
-    jobs:
-      - aws-cli:
-          context: aws
-      - build:
-          context: aws
+# workflows:
+#   version: 2
+#   deploy:
+#     jobs:
+#       - aws-cli:
+#           context: aws
+#       - build:
+#           context: aws
