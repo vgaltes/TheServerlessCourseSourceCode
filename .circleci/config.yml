@@ -1,14 +1,5 @@
 version: 2.1
-orbs:
-  aws-cli: circleci/aws-cli@0.1.13
 jobs:
-  # aws-cli:
-  #   executor: aws-cli/default
-  #   steps:
-  #     - checkout
-  #     - aws-cli/install
-  #     - aws-cli/configure
-  #         # profile-name: serverless-agent
   build:
     docker:
       - image: circleci/node:8.10
@@ -45,12 +36,3 @@ jobs:
       - run:
           name: Deploy application
           command: npm run deploy:prod
-
-# workflows:
-#   version: 2
-#   deploy:
-#     jobs:
-#       - aws-cli:
-#           context: aws
-#       - build:
-#           context: aws
