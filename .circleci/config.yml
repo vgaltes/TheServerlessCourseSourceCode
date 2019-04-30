@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout
       - aws-cli/install
-      - aws-cli/configure:
-          profile-name: serverless-agent
+      - aws-cli/configure
+          # profile-name: serverless-agent
   build:
     docker:
       - image: circleci/node:8.10
