@@ -47,9 +47,10 @@ jobs:
           command: npm run deploy:prod
 
 workflows:
+  version: 2
   deploy:
     jobs:
-      - aws-cli
+      - aws-cli:
           context: aws
-      - build
+      - build:
           context: aws
