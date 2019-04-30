@@ -50,6 +50,6 @@ workflows:
   deploy:
     jobs:
       - aws-cli
-        context: aws
+          context: aws
       - build
-        context: aws
+          context: aws
