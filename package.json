@@ -9,7 +9,8 @@
     "deploy": "serverless deploy --aws-profile serverless-local --aws-s3-accelerate",
     "seed": "AWS_PROFILE=serverless-local node seedGetTogethers.js gettogethers",
     "deploy:sit": "serverless deploy --stage sit",
-    "seed:sit": "node seedGetTogethers.js sit-gettogethers"
+    "seed:sit": "node seedGetTogethers.js sit-gettogethers",
+    "deploy:prod": "serverless deploy --stage prod"
   },
   "repository": {
     "type": "git",
