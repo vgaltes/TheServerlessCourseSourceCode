@@ -13,7 +13,7 @@ provider:
 custom:
   defaultRegion: eu-west-1
   defaultStage: dev${env:SLSUSER, ""}
-  getTogethersTableName: ${self:provider.stage}-gettogethers
+  getTogethersTableName: ${ssm:/gettogethers/${self:provider.stage}/secureTableName~true}
   joinGetTogetherSnsTopicName: ${self:provider.stage}-joingettogethers
   joinGetTogetherSnsTopic: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:custom.joinGetTogetherSnsTopicName}
 
