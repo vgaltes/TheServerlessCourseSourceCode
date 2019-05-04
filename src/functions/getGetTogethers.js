@@ -5,7 +5,6 @@ const log = require("../lib/log");
 const captureCorrelationId = require("../middleware/captureCorrelationId");
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const tableName = process.env.getTogethersTableName;
 
 const handler = async (event, context) => {
 

@@ -16,7 +16,6 @@ function captureHttp(headers, awsRequestId) {
     }
 
     if (!correlationId) {
-        log.info(`Let's use requestId -> ${awsRequestId}`);
         correlationId = awsRequestId;
     }
 
