@@ -10,6 +10,10 @@ provider:
   region: ${opt:region, self:custom.defaultRegion}
   stage: ${opt:stage, self:custom.defaultStage}
 
+package:
+  exclude: 
+    - cloudwatch-logs-to-logzio/**
+
 custom:
   defaultRegion: eu-west-1
   defaultStage: dev${env:SLSUSER, ""}
