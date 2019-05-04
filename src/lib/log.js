@@ -7,6 +7,15 @@ const LogLevels = {
   
   // default to debug if not specified
   const logLevelName = process.env.log_level || "DEBUG";
+
+  const getContext = () => { return {
+    awsRegion: process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION,
+    functionName: process.env.AWS_LAMBDA_FUNCTION_NAME,
+    functionVersion: process.env.AWS_LAMBDA_FUNCTION_VERSION,
+    functionMemorySize: process.env.AWS_LAMBDA_FUNCTION_MEMORY_SIZE,
+    stage: process.env.ENVIRONMENT || process.env.STAGE,
+    correlationId: process.env.correlationId
+  }};
   
   function isEnabled(level) {
     return level >= LogLevels[logLevelName];
@@ -29,7 +38,7 @@ const LogLevels = {
       return;
     }
   
-    const logMsg = Object.assign({}, params);
+    const logMsg = Object.assign({}, getContext(), params);
     logMsg.level = levelName;
     logMsg.message = message;
   

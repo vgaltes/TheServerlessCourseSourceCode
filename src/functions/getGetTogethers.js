@@ -1,11 +1,15 @@
 const AWS = require("aws-sdk");
 const middy = require("middy");
 const { ssm } = require("middy/middlewares");
+const log = require("../lib/log");
+const captureCorrelationId = require("../middleware/captureCorrelationId");
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const tableName = process.env.getTogethersTableName;
 
 const handler = async (event, context) => {
+
+    log.info("Getting gettogethers");
   const count = 8;
 
   const req = {
@@ -32,4 +36,4 @@ module.exports.handler = middy(handler).use(
         tableName: `${process.env.getTogethersTableName}`
       }
     })
-  );
+  ).use(captureCorrelationId());
