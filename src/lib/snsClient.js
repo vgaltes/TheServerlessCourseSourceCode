@@ -6,7 +6,7 @@ const log = require("../lib/log");
 
 function addCorrelationId(messageAttributes) {
     let attributes = {};
-    attributes["correlationId"] = {
+    attributes["x-correlation-id"] = {
         DataType: 'String',
         StringValue: process.env.correlationId
     };
