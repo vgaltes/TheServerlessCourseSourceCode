@@ -1,6 +1,7 @@
 'use strict';
 
-const AWS = require('aws-sdk');
+const AWSXray = require("aws-xray-sdk")
+const AWS = AWSXray.captureAWS(require("aws-sdk"));
 const SNS = new AWS.SNS();
 const log = require("../lib/log");
 

@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.445.0",
+    "aws-xray-sdk": "^2.3.3",
     "chance": "^1.0.18",
     "middy": "^0.25.1"
   }

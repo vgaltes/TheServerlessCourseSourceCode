@@ -9,6 +9,8 @@ provider:
   runtime: nodejs8.10
   region: ${opt:region, self:custom.defaultRegion}
   stage: ${opt:stage, self:custom.defaultStage}
+  tracing:
+    lambda: true
 
 package:
   exclude: 
@@ -37,6 +39,11 @@ functions:
       - Effect: Allow
         Action: ssm:GetParameters*
         Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/gettogethers/${self:provider.stage}/*
+      - Effect: Allow
+        Action: 
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: '*'
     environment:
       getTogethersTableName: /gettogethers/${self:provider.stage}/secureTableName
 
@@ -45,11 +52,23 @@ functions:
     events:
       - sns: ${self:custom.joinGetTogetherSnsTopicName}
     onError: ${self:custom.notifyOrganiserDLQSnsTopic}
+    iamRoleStatements:
+      - Effect: Allow
+        Action: 
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: '*'
 
   notifyOrganiserDLQ:
     handler: src/functions/notifyOrganiserDLQ.handler
     events:
       - sns: ${self:custom.notifyOrganiserDLQSnsTopic}
+    iamRoleStatements:
+      - Effect: Allow
+        Action: 
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: '*'
 
   joinGetTogether:
     handler: src/functions/joinGetTogether.handler
@@ -63,6 +82,11 @@ functions:
       - Effect: Allow
         Action: sns:Publish
         Resource: ${self:custom.joinGetTogetherSnsTopic}
+      - Effect: Allow
+        Action: 
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: '*'
 
 resources:
   Resources:
