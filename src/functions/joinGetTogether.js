@@ -3,8 +3,15 @@ const sns = require("../lib/snsClient");
 const log = require("../lib/log");
 const middy = require("middy");
 const captureCorrelationId = require("../middleware/captureCorrelationId");
+const epsagon = require("epsagon");
 
-const handler = async (event, context) => {
+epsagon.init({
+  token: "4631348e-1228-44f4-937b-0a503d298a8c",
+  appName: process.env.service,
+  metadataOnly: false
+});
+
+const handler = epsagon.lambdaWrapper(async (event, context) => {
   const body = JSON.parse(event.body);
   const getTogetherId = body.getTogetherId;
   const userEmail = body.getTogetherId;
@@ -33,6 +40,6 @@ const handler = async (event, context) => {
   };
 
   return response;
-};
+});
 
 module.exports.handler = middy(handler).use(captureCorrelationId());

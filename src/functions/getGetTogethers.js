@@ -4,10 +4,17 @@ const middy = require("middy");
 const { ssm } = require("middy/middlewares");
 const log = require("../lib/log");
 const captureCorrelationId = require("../middleware/captureCorrelationId");
+const epsagon = require("epsagon");
+
+epsagon.init({
+  token: "4631348e-1228-44f4-937b-0a503d298a8c",
+  appName: process.env.service,
+  metadataOnly: false
+});
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-const handler = async (event, context) => {
+const handler = epsagon.lambdaWrapper(async (event, context) => {
 
     log.info("Getting gettogethers");
   const count = 8;
@@ -25,7 +32,7 @@ const handler = async (event, context) => {
   };
 
   return res;
-};
+});
 
 module.exports.handler = middy(handler).use(
     ssm({
