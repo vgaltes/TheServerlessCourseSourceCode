@@ -3,8 +3,8 @@ service: gettogether
 plugins:
   - serverless-pseudo-parameters
   - serverless-iam-roles-per-function
-  - serverless-plugin-canary-deployments
-  - serverless-plugin-aws-alerts
+  # - serverless-plugin-canary-deployments
+  # - serverless-plugin-aws-alerts
 
 provider:
   name: aws
@@ -22,9 +22,9 @@ provider:
         - 'xray:PutTraceSegments'
         - 'xray:PutTelemetryRecords'
       Resource: '*'
-    - Effect: Allow
-      Action: codedeploy:*
-      Resource: '*'
+    # - Effect: Allow
+    #   Action: codedeploy:*
+    #   Resource: '*'
 
 package:
   exclude: 
@@ -38,12 +38,12 @@ custom:
   joinGetTogetherSnsTopic: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:custom.joinGetTogetherSnsTopicName}
   notifyOrganiserDLQSnsTopicName: ${self:provider.stage}-joingettogetherdlq
   notifyOrganiserDLQSnsTopic: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:custom.notifyOrganiserDLQSnsTopicName}
-  alerts:
-    stages:
-      - ${self:provider.stage}
-    dashboards: false
-    alarms:
-      - functionErrors
+  # alerts:
+  #   stages:
+  #     - ${self:provider.stage}
+  #   dashboards: false
+  #   alarms:
+  #     - functionErrors
 
 functions:
   getGetTogethers:
@@ -59,13 +59,17 @@ functions:
       - Effect: Allow
         Action: ssm:GetParameters*
         Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/gettogethers/${self:provider.stage}/*
+      - Effect: Allow
+        Action: ssm:GetParameters*
+        Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/gettogethers/functionShieldToken
     environment:
       getTogethersTableName: /gettogethers/${self:provider.stage}/secureTableName
-    deploymentSettings:
-      type: Canary10Percent5Minutes
-      alias: Live
-      alarms:
-        - GetGetTogethersFunctionErrorsAlarm #FunctionName + AlarmName + "Alarm"
+      functionShieldToken: /gettogethers/functionShieldToken
+    # deploymentSettings:
+    #   type: Canary10Percent5Minutes
+    #   alias: Live
+    #   alarms:
+    #     - GetGetTogethersFunctionErrorsAlarm #FunctionName + AlarmName + "Alarm"
 
   notifyOrganiser:
     handler: src/functions/notifyOrganiser.handler

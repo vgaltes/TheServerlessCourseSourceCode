@@ -5,6 +5,8 @@ const { ssm } = require("middy/middlewares");
 const log = require("../lib/log");
 const captureCorrelationId = require("../middleware/captureCorrelationId");
 const epsagon = require("epsagon");
+const http = require('http');
+const functionShield = require("@middy/function-shield");
 
 epsagon.init({
   token: "4631348e-1228-44f4-937b-0a503d298a8c",
@@ -16,7 +18,8 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 const handler = epsagon.lambdaWrapper(async (event, context) => {
 
-    throw new Error("oooooops");
+    // throw new Error("oooooops");
+    http.get('http://vgaltes.com');
 
     log.info("Getting gettogethers");
   const count = 8;
@@ -42,7 +45,15 @@ module.exports.handler = middy(handler).use(
       cacheExpiryInMillis: 3 * 60 * 1000,
       setToContext: true,
       names: {
-        tableName: `${process.env.getTogethersTableName}`
+        tableName: `${process.env.getTogethersTableName}`,
+        FUNCTION_SHIELD_TOKEN: `${process.env.functionShieldToken}`
       }
     })
-  ).use(captureCorrelationId());
+  ).use(captureCorrelationId())
+  .use(functionShield(
+    {
+      policy: {
+        outbound_connectivity: 'alert'
+      }
+    }
+  ));
