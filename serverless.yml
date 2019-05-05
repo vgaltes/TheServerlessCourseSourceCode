@@ -3,6 +3,7 @@ service: gettogether
 plugins:
   - serverless-pseudo-parameters
   - serverless-iam-roles-per-function
+  - serverless-plugin-canary-deployments
 
 provider:
   name: aws
@@ -19,6 +20,9 @@ provider:
       Action: 
         - 'xray:PutTraceSegments'
         - 'xray:PutTelemetryRecords'
+      Resource: '*'
+    - Effect: Allow
+      Action: codedeploy:*
       Resource: '*'
 
 package:
@@ -48,9 +52,11 @@ functions:
       - Effect: Allow
         Action: ssm:GetParameters*
         Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/gettogethers/${self:provider.stage}/*
-      
     environment:
       getTogethersTableName: /gettogethers/${self:provider.stage}/secureTableName
+    deploymentSettings:
+      type: Canary10Percent5Minutes
+      alias: Live
 
   notifyOrganiser:
     handler: src/functions/notifyOrganiser.handler
