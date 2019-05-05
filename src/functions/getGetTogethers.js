@@ -16,6 +16,8 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 const handler = epsagon.lambdaWrapper(async (event, context) => {
 
+    throw new Error("oooooops");
+
     log.info("Getting gettogethers");
   const count = 8;
 

@@ -4,6 +4,7 @@ plugins:
   - serverless-pseudo-parameters
   - serverless-iam-roles-per-function
   - serverless-plugin-canary-deployments
+  - serverless-plugin-aws-alerts
 
 provider:
   name: aws
@@ -37,6 +38,12 @@ custom:
   joinGetTogetherSnsTopic: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:custom.joinGetTogetherSnsTopicName}
   notifyOrganiserDLQSnsTopicName: ${self:provider.stage}-joingettogetherdlq
   notifyOrganiserDLQSnsTopic: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:custom.notifyOrganiserDLQSnsTopicName}
+  alerts:
+    stages:
+      - ${self:provider.stage}
+    dashboards: false
+    alarms:
+      - functionErrors
 
 functions:
   getGetTogethers:
@@ -57,6 +64,8 @@ functions:
     deploymentSettings:
       type: Canary10Percent5Minutes
       alias: Live
+      alarms:
+        - GetGetTogethersFunctionErrorsAlarm #FunctionName + AlarmName + "Alarm"
 
   notifyOrganiser:
     handler: src/functions/notifyOrganiser.handler

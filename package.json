@@ -26,6 +26,7 @@
     "jest": "^24.7.1",
     "serverless": "^1.41.1",
     "serverless-iam-roles-per-function": "^1.0.4",
+    "serverless-plugin-aws-alerts": "^1.2.4",
     "serverless-plugin-canary-deployments": "^0.4.7",
     "serverless-pseudo-parameters": "^2.4.0",
     "superagent": "^5.0.3",
