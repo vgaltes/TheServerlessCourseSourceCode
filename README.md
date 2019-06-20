@@ -20,7 +20,7 @@ Para poder ir avanzando en el curso, vas a tener que ser capaz de ir subiendo tu
  - Forkear este repositorio y trabajar siempre en master. Haz tus cambios en master y súbelos. Si necesitas ver como está un archivo en una rama en concreto, siempre puedes venir al repositorio original y mirar como está.
  - Crearte tu propio repositorio vacío y copiarte los ficheros que hay en master.
  
-Cualquiera de las tres opciones es buena. Sólo recuerda que si escoges la solución 1, si vas a una rama, tendrás la solución final para esa rama.
+Cualquiera de las dos opciones es buena. Sólo recuerda que si escoges la solución 1, si vas a una rama, tendrás la solución final para esa rama.
 
 ## Creación de un profile en nuestro ordenador.
 Ahora es la hora de configurar nuestro ordenador para que utilice estas credenciales a la hora de desplegar nuestra aplicación. Hay varias maneras de hacer esto pero la mejor es utilizar un profile y que este no sea el profile por defecto, para evitar posibles desgracias en el futuro.
