@@ -29,7 +29,7 @@ module.exports.handler = middy(handler).use(
       cacheExpiryInMillis: 3 * 60 * 1000,
       setToContext: true,
       names: {
-        tableName: `${process.env.getTogethersTableName}`
+        tableName: `${process.env.getTogethersTableNamePath}`
       }
     })
   );
