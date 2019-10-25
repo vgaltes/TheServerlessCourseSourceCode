@@ -3,7 +3,6 @@ const middy = require("middy");
 const { ssm } = require("middy/middlewares");
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const tableName = process.env.getTogethersTableName;
 
 const handler = async (event, context) => {
   const count = 8;
